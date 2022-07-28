@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:35:25 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/28 17:42:30 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/28 20:17:43 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	main(int argc, char *argv[])
 			char *line;
 			line = get_next_line(pipes[0]);
 			while (line){
-				format_out_ping(line, *cont);
 				write(output, line, ft_strlen(line));
 				write(output, "\n", 1);
+				format_out_ping(line, *cont, output);
 				free(line);
 				line = get_next_line(pipes[0]);
 			}
@@ -64,6 +64,7 @@ int	main(int argc, char *argv[])
 			int pid3;
 			int pipes[2];
 			char *line;
+			char	*line_out;
 			
 			while (index)
 			{
@@ -83,21 +84,64 @@ int	main(int argc, char *argv[])
 				while (line)
 				{
 					write(output, line, ft_strlen(line));
-					format_out_http(line, *cont);
+					if (ft_strnstr(line, "HTTP/", ft_strlen(line)))
+						line_out = ft_strdup(line);
 					free(line);
 					line = get_next_line(pipes[0]);
 				}
+				close(pipes[0]);
+				format_out_http(line_out, *cont, output);
+				free(line_out);
 				write(output, "\n", 1);
+				free(line);
+				index++;
+			}
+		}
+		else if (pid == 0 && !ft_strncmp(cont->protocol, "DNS", ft_strlen(cont->protocol)))
+		{
+			int pipes[2];
+			char	*line;
+			int pid2;
+			int index;
+			char	*line_out;
+			index = 1;
+			while (index){
+				if (index > 1)
+					sleep(cont->interval);
+				pipe(pipes);
+				pid2 = fork();
+				if (pid2 == 0)
+				{
+					close(pipes[0]);
+					dup2(pipes[1], 1);
+					close(pipes[1]);
+					//ft_printf("dns: %s\nAddress:%\n")
+					execlp("dig", "dig", ft_strjoin("@", cont->dns_server), cont->address, NULL);
+				}
+				close(pipes[1]);
+				line = get_next_line(pipes[0]);
+				while (line)
+				{
+					write(output, line, ft_strlen(line));
+					if (ft_strnstr(line, cont->address, ft_strlen(cont->address)))
+						line_out = ft_strdup(line);
+					free(line);
+					line = get_next_line(pipes[0]);
+				}
+				format_out_dns(line_out, *cont, output);
+				free(line_out);
 				close(pipes[0]);
 				free(line);
 				index++;
 			}
 		}
-		// else if (fork == 0 && DNS)
 		temp = temp->next;
 	}
 	int status;
-	waitpid(pid, &status, 0);
+	int processes;
+	processes = ft_lstsize(data);
+	for (int i = 0; i < processes; i++)
+		wait(NULL);
 	ft_printf("xxxxxxxxxxxxxxxx");
 	// while (temp)
 	// {
