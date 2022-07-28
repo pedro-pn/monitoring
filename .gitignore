@@ -1,2 +1,5 @@
 objs/
 *.a
+*.txt
+monitoring.log
+monitoring

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:34:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/27 22:35:41 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/28 13:56:18 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	fill_data(t_list **data, char **line)
 		fill_dns(data, line);
 	else{
 		ft_lstclear(data, clean_data);
-		clean_array(line);
+		clean_array((void **)line);
 		error_handle(INVINPUT);
 	}
 }
@@ -57,7 +57,7 @@ void	fill_http(t_list **data, char **line)
 	while (line[index])
 		index++;
 	if (index != 6){
-		clean_array(line);
+		clean_array((void **)line);
 		ft_lstclear(data, clean_data);
 		error_handle(INVINPUT);
 	}
@@ -84,7 +84,7 @@ void	fill_ping(t_list **data, char **line)
 	while (line[index])
 		index++;
 	if (index != 4){
-		clean_array(line);
+		clean_array((void **)line);
 		ft_lstclear(data, clean_data);
 		error_handle(INVINPUT);
 	}
@@ -110,7 +110,7 @@ void	fill_dns(t_list **data, char **line)
 	while (line[index])
 		index++;
 	if (index != 5){
-		clean_array(line);
+		clean_array((void **)line);
 		ft_lstclear(data, clean_data);
 		error_handle(INVINPUT);
 	}
