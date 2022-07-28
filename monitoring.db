@@ -1,2 +1,4 @@
-intra	HTTP	intra.42.fr	GET	200	5
-game ping test	PING	game.42sp.org.br	7
+dns google	DNS	google.com	10	8.8.8.8
+intra	HTTP	intra.42.fr	GET	200	6
+game ping test	PING	game.42sp.org.br	9
+workspaces monitoring	PING	workspaces.42sp.org.br	3
