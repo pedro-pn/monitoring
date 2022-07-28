@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:35:25 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/28 15:05:51 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/28 17:42:30 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char *argv[])
 	data = NULL;
 	read_file(&data, argv[1]);
 	temp = data;
-	int output = open("monitoring.log", O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	int output = open("monitoring.log", O_WRONLY | O_APPEND | O_CREAT, 0664);
 	if (output < 0)
 		return 0;
 	while (temp)
@@ -34,19 +34,10 @@ int	main(int argc, char *argv[])
 		pid = fork();
 		if (pid == 0 && !ft_strncmp(cont->protocol, "PING", ft_strlen(cont->protocol)))
 		{
-			int pid2 = fork();
-			if (pid2 == 0)
-			{
-				dup2(output, 1);
-				close(output);
-				ft_printf("=============================\n");
-				ft_printf("NAME: %s\t Addres: %s\n", cont->name, cont->address);
-				execlp("ping", "ping", cont->address, "-i", ft_itoa(cont->interval), NULL);
-			}
 			int pipes[2];
 			pipe(pipes);
-			int pid3 = fork();
-			if (pid3 == 0)
+			int pid2 = fork();
+			if (pid2 == 0)
 			{
 				close(pipes[0]);
 				dup2(pipes[1], 1);
@@ -57,13 +48,51 @@ int	main(int argc, char *argv[])
 			char *line;
 			line = get_next_line(pipes[0]);
 			while (line){
-				ft_printf("%s", line);
+				format_out_ping(line, *cont);
+				write(output, line, ft_strlen(line));
+				write(output, "\n", 1);
+				free(line);
 				line = get_next_line(pipes[0]);
 			}
-			//tratar(pipe[0]) < stdout
+
 		}
-	
-		// else if (fork == 0 && HTML)
+
+		else if (pid == 0 && !ft_strncmp(cont->protocol, "HTTP", ft_strlen(cont->protocol)))
+		{
+			int index = 1;
+			int pid2;
+			int pid3;
+			int pipes[2];
+			char *line;
+			
+			while (index)
+			{
+				if (index > 1)
+					sleep(cont->interval);
+				pipe(pipes);
+				pid2 = fork();
+				if (pid2 == 0)
+				{
+					close(pipes[0]);
+					dup2(pipes[1], 1);
+					close(pipes[1]);
+					execlp("curl", "curl", "-s", "-i", cont->address, NULL);
+				}
+				close(pipes[1]);
+				line = get_next_line(pipes[0]);
+				while (line)
+				{
+					write(output, line, ft_strlen(line));
+					format_out_http(line, *cont);
+					free(line);
+					line = get_next_line(pipes[0]);
+				}
+				write(output, "\n", 1);
+				close(pipes[0]);
+				free(line);
+				index++;
+			}
+		}
 		// else if (fork == 0 && DNS)
 		temp = temp->next;
 	}

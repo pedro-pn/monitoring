@@ -1,2 +1,2 @@
-game ping test	PING	game.42sp.org.br	5
-test	PING	google.com	10
+intra	HTTP	intra.42.fr	GET	200	5
+game ping test	PING	game.42sp.org.br	7
