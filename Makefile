@@ -1,11 +1,11 @@
-SOURCES = main.c file.c error.c
+SOURCES = main.c file.c error.c format.c
 NAME = monitoring
 LIBFT = ./libft/libft.a
 SRCS_PATH = srcs
 OBJS_PATH = objs
 SRCS = ${addprefix ${SRCS_PATH}/, ${SOURCES}}
 OBJS = ${addprefix ${OBJS_PATH}/, ${SOURCES:.c=.o}}
-FLAGS = -Werror -Wall -Wextra
+FLAGS = -g
 CC = gcc
 
 # Colors
