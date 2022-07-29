@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:25:57 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 16:05:37 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 19:56:00 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ void	start_http(t_data data, int output);
 void	start_dns(t_data data, int output);
 void	check_args(int argc, char *argv[]);
 void	print_menu(int output);
+void	monitoring_init(t_list **data, int argc, char *argv[], int *output);
+void	monitoring_start(t_list *data, int output_fd);
 
 #endif
