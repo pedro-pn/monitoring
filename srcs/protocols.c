@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 21:10:33 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/28 21:59:37 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/28 23:59:04 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ void	start_ping(t_data data, int output)
 {
 	int pipes[2];
 	char *line;
+	int pid2;
+	
 	pipe(pipes);
-	int pid2 = fork();
-	if (pid2 == 0)
-	{
+	pid2 = fork();
+	if (pid2 == 0){
 		close(pipes[0]);
 		dup2(pipes[1], 1);
 		close(pipes[1]);
@@ -38,20 +39,20 @@ void	start_ping(t_data data, int output)
 
 void	start_http(t_data data, int output)
 {
-	int 	index = 1;
+	int 	index;
 	int		pid;
 	int		pipes[2];
-	char 	*line;
+	char	*line;
 	char	*line_out;
 	
+	index = 1;
 	while (index)
 	{
 		if (index > 1)
 			sleep(data.interval);
 		pipe(pipes);
 		pid = fork();
-		if (pid == 0)
-		{
+		if (pid == 0){
 			close(pipes[0]);
 			dup2(pipes[1], 1);
 			close(pipes[1]);
@@ -59,8 +60,7 @@ void	start_http(t_data data, int output)
 		}
 		close(pipes[1]);
 		line = get_next_line(pipes[0]);
-		while (line)
-		{
+		while (line){
 			write(output, line, ft_strlen(line));
 			if (ft_strnstr(line, "HTTP/", ft_strlen(line)))
 				line_out = ft_strdup(line);
@@ -89,8 +89,7 @@ void	start_dns(t_data data, int output)
 			sleep(data.interval);
 		pipe(pipes);
 		pid2 = fork();
-		if (pid2 == 0)
-		{
+		if (pid2 == 0){
 			close(pipes[0]);
 			dup2(pipes[1], 1);
 			close(pipes[1]);
@@ -98,8 +97,7 @@ void	start_dns(t_data data, int output)
 		}
 		close(pipes[1]);
 		line = get_next_line(pipes[0]);
-		while (line)
-		{
+		while (line){
 			write(output, line, ft_strlen(line));
 			if (ft_strnstr(line, data.address, ft_strlen(line)))
 				line_out = ft_strdup(line);
