@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:35:25 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 00:03:18 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 11:30:09 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ int	main(int argc, char *argv[])
 	t_list	*temp;
 	t_data	*cont;
 	int		pid;
-	int 	processes;
+	int		processes;
+	int		output;
 	
-	if (argc < 2)
-		error_handle(NARG);
+	check_args(argc, argv);
 	data = NULL;
-	read_file(&data, argv[1]);
+	read_file(&data, "monitoring.db");
 	temp = data;
-	int output = open("monitoring.log", O_WRONLY | O_APPEND | O_CREAT, 0664);
+	output = open("monitoring.log", O_WRONLY | O_APPEND | O_CREAT, 0664);
 	if (output < 0)
 		error_handle(OUTFAIL);
 	while (temp){

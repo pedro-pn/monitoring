@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:25:57 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 00:04:00 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 11:09:15 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define INVINPUT 2
 # define  OUTFAIL 3
 # define NARG 4
+# define INVARG 5
+# define MONARG 6
 
 typedef struct s_data
 {
@@ -49,6 +51,8 @@ void	format_out_dns(char *line, t_data content, int output);
 void	start_ping(t_data data, int output);
 void	start_http(t_data data, int output);
 void	start_dns(t_data data, int output);
+void	check_args(int argc, char *argv[]);
+void	recover_log(void);
 // typedef struct s_http
 // {
 // 	char	*name;
