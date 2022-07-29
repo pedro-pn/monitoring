@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:15:50 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/28 23:59:13 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 11:06:05 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	format_out_ping(char *line, t_data content, int output)
 	time = ft_strnstr(line, "time", ft_strlen(line));
 	if (time)
 	{
-		ft_printf("#short_ping - Name: %s\tProtocol: %s\t%s",
+		ft_printf("# Name: %s\tProtocol: %s\t%s",
 		content.name, content.protocol, time);
-		dprintf(output, "#short_ping - Name: %s\tProtocol: %s\t%s",
+		dprintf(output, "# Name: %s\tProtocol: %s\t%s",
 		content.name, content.protocol, time);
 	}
 }
@@ -32,17 +32,17 @@ void	format_out_http(char *line, t_data content, int output)
 
 	line_splt = ft_split(line, ' ');
 	code = ft_atoi(line_splt[1]);
-	ft_printf("#short_http - Name: %s\t Protcol: %s\tcode_expected: %d\tgot: %d\n",
+	ft_printf("# Name: %s\t Protcol: %s\tcode_expected: %d\tgot: %d\n",
 	content.name, content.protocol, content.http_code, code);
-	dprintf(output, "#short_http - Name: %s\t Protcol: %s\tcode_expected: %d\tgot: %d\n",
+	dprintf(output, "# Name: %s\t Protcol: %s\tcode_expected: %d\tgot: %d\n",
 	content.name, content.protocol, content.http_code, code);
 	clean_array((void **)line_splt);
 }
 
 void	format_out_dns(char *line, t_data content, int output)
 {
-	ft_printf("#short_dns - Name: %s\tProtocol: %s\tAddress: %s\tDNS_server: %s\n\tGot: %s\n",
+	ft_printf("# Name: %s\tProtocol: %s\tAddress: %s\tDNS_server: %s\n# Got: %s\n",
 	content.name, content.protocol, content.address, content.dns_server, line);
-	dprintf(output, "#short_dns - Name: %s\tProtocol: %s\tAddress: %s\tDNS_server: %s\n\tGot: %s\n",
+	dprintf(output, "# Name: %s\tProtocol: %s\tAddress: %s\tDNS_server: %s\n# Got: %s\n",
 	content.name, content.protocol, content.address, content.dns_server, line);
 }

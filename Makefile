@@ -1,4 +1,4 @@
-SOURCES = main.c file.c error.c format.c protocols.c
+SOURCES = main.c file.c error.c format.c protocols.c args.c
 NAME = monitoring
 LIBFT = ./libft/libft.a
 SRCS_PATH = srcs
