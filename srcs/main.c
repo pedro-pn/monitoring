@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:35:25 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 14:54:27 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 15:56:34 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char *argv[])
 	output = open("monitoring.log", O_WRONLY | O_APPEND | O_CREAT, 0664);
 	print_menu(output);
 	if (output < 0)
-		error_handle(OUTFAIL);
+		error_handle(OUTFAIL, NULL);
 	while (temp){
 		cont = (t_data*)temp->content;
 		pid = fork();

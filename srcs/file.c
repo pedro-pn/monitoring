@@ -6,11 +6,17 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:34:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/28 23:59:08 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 16:48:35 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "monitoring.h"
+
+static void	fill_data(t_list **data, char **line);
+static void	fill_http(t_list **data, char **line);
+static void	fill_ping(t_list **data, char **line);
+static void	fill_dns(t_list **data, char **line);
+static int	check_interval(char	*interval);
 
 void	read_file(t_list **data, char *file_name)
 {
@@ -20,20 +26,20 @@ void	read_file(t_list **data, char *file_name)
 
 	fd = open(file_name, O_RDONLY);
 	if (!fd)
-		error_handle(FILEOP);
+		error_handle(FILEOP, NULL);
 	line = get_next_line(fd);
 	while (line)
 	{
 		splt_line = ft_split(line, '\t');
+		free(line);
 		fill_data(data, splt_line);
 		free(splt_line);
-		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
 }
 
-void	fill_data(t_list **data, char **line)
+static void	fill_data(t_list **data, char **line)
 {
 	if (!ft_strncmp(line[1], "HTTP", ft_strlen(line[1])))
 		fill_http(data, line);
@@ -43,26 +49,32 @@ void	fill_data(t_list **data, char **line)
 		fill_dns(data, line);
 	else{
 		ft_lstclear(data, clean_data);
+		error_handle(INVPROTO, line[1]);
 		clean_array((void **)line);
-		error_handle(INVINPUT);
+		exit(EXIT_FAILURE);
 	}
 }
 
-void	fill_http(t_list **data, char **line)
+static void	fill_http(t_list **data, char **line)
 {
 	t_data	*content;
-	int		index;
+	int		num_col;
 
-	index = 0;
-	while (line[index])
-		index++;
-	if (index != 6){
+	num_col = 0;
+	while (line[num_col])
+		num_col++;
+	if (num_col != 6){
 		clean_array((void **)line);
 		ft_lstclear(data, clean_data);
-		error_handle(INVINPUT);
+		error_handle(INVINPUT, NULL);
+	}
+	if (check_interval(line[5]) == 0){
+		error_handle(EINTERVAL, line[5]);
+		clean_array((void **)line);
+		ft_lstclear(data, clean_data);
+		exit(EXIT_FAILURE);
 	}
 	content = malloc(sizeof(*content));
-	index = 0;
 	content->name = line[0];
 	content->protocol = line[1];
 	content->address = line[2];
@@ -75,21 +87,26 @@ void	fill_http(t_list **data, char **line)
 	ft_lstadd_back(data, ft_lstnew(content));
 }
 
-void	fill_ping(t_list **data, char **line)
+static void	fill_ping(t_list **data, char **line)
 {
 	t_data	*content;
-	int		index;
+	int		num_col;
 
-	index = 0;
-	while (line[index])
-		index++;
-	if (index != 4){
+	num_col = 0;
+	while (line[num_col])
+		num_col++;
+	if (num_col != 4){
 		clean_array((void **)line);
 		ft_lstclear(data, clean_data);
-		error_handle(INVINPUT);
+		error_handle(INVINPUT, NULL);
+	}
+	if (check_interval(line[3]) == 0){
+		error_handle(EINTERVAL, line[3]);
+		clean_array((void **)line);
+		ft_lstclear(data, clean_data);
+		exit(EXIT_FAILURE);
 	}
 	content = malloc(sizeof(*content));
-	index = 0;
 	content->name = line[0];
 	content->protocol = line[1];
 	content->address = line[2];
@@ -101,21 +118,26 @@ void	fill_ping(t_list **data, char **line)
 	ft_lstadd_back(data, ft_lstnew(content));
 }
 
-void	fill_dns(t_list **data, char **line)
+static void	fill_dns(t_list **data, char **line)
 {
 	t_data	*content;
-	int		index;
+	int		num_col;
 
-	index = 0;
-	while (line[index])
-		index++;
-	if (index != 5){
+	num_col = 0;
+	while (line[num_col])
+		num_col++;
+	if (num_col != 5){
 		clean_array((void **)line);
 		ft_lstclear(data, clean_data);
-		error_handle(INVINPUT);
+		error_handle(INVINPUT, NULL);
+	}
+	if (check_interval(line[3]) == 0){
+		error_handle(EINTERVAL, line[3]);
+		clean_array((void **)line);
+		ft_lstclear(data, clean_data);
+		exit(EXIT_FAILURE);
 	}
 	content = malloc(sizeof(*content));
-	index = 0;
 	content->name = line[0];
 	content->protocol = line[1];
 	content->address = line[2];
@@ -157,4 +179,23 @@ void	clean_data(void *content)
 	if (cont->protocol)
 		free(cont->protocol);
 	free(content);
+}
+
+static int	check_interval(char	*interval)
+{
+	char	*trim_inter;
+	int		index;
+
+	trim_inter = ft_strtrim(interval, "\n\t");
+	index = 0;
+	while(trim_inter[index])
+	{
+		if (!ft_isdigit(trim_inter[index])){
+			free(trim_inter);
+			return (0);
+		}
+		index++;
+	}
+	free(trim_inter);
+	return (1);
 }
