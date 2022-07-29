@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:35:25 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 13:59:15 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 14:54:27 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,17 @@ int	main(int argc, char *argv[])
 			start_http(*cont, output);
 		else if (pid == 0 && !ft_strncmp(cont->protocol, "DNS", ft_strlen(cont->protocol)))
 			start_dns(*cont, output);
+		if (pid == 0) // make sure child process don't loop
+			break ;
 		temp = temp->next;
 	}
 	processes = ft_lstsize(data);
 	for (int i = 0; i < processes; i++)
 		wait(NULL);
-	ft_printf("xxxxxxxxxxxxxxxx\n");
+	ft_printf("xxxxxxxxxxxxxxxx\n"); // test purpose
 	ft_lstclear(&data, clean_data);
 	close(output);
-	return (0);
+	if (pid == 0)
+		exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }

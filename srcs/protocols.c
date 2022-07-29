@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 21:10:33 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 13:01:38 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 14:52:47 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	start_dns(t_data data, int output)
 		line = get_next_line(pipes[0]);
 		while (line){
 			write(output, line, ft_strlen(line));
-			if (ft_strnstr(line, data.address, ft_strlen(line)))
+			if (ft_strnstr(line, data.address, ft_strlen(line)) && line[0] != ';')
 				line_out = ft_strdup(line);
 			free(line);
 			line = get_next_line(pipes[0]);
