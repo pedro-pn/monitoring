@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:25:57 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/28 21:52:24 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:04:00 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "libft.h"
 # include <fcntl.h>
 # include <stdio.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 
 # define FILEOP 1
 # define INVINPUT 2
@@ -33,7 +35,6 @@ typedef struct s_data
 	char	*dns_server;
 }			t_data;
 
-void	data_init(t_data *data);
 void	read_file(t_list **data, char *file_name);
 void	fill_data(t_list **data, char **line);
 void	fill_http(t_list **data, char **line);

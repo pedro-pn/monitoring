@@ -6,13 +6,11 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:35:25 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/28 21:53:19 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 00:03:18 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "monitoring.h"
-#include <sys/wait.h>
-#include <sys/types.h>
 
 int	main(int argc, char *argv[])
 {
@@ -30,8 +28,7 @@ int	main(int argc, char *argv[])
 	int output = open("monitoring.log", O_WRONLY | O_APPEND | O_CREAT, 0664);
 	if (output < 0)
 		error_handle(OUTFAIL);
-	while (temp)
-	{
+	while (temp){
 		cont = (t_data*)temp->content;
 		pid = fork();
 		if (pid == 0 && !ft_strncmp(cont->protocol, "PING", ft_strlen(cont->protocol)))

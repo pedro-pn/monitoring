@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:34:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/28 20:06:59 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/28 23:59:08 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	fill_dns(t_list **data, char **line)
 	content->http_method = 0;
 	content->http_code = 0;
 	content->interval = ft_atoi(line[3]);
-	content->dns_server = ft_strtrim(line[4], "\n");
+	content->dns_server = ft_strtrim(line[4], "\n \t");
 	free(line[3]);
 	free(line[4]);
 	ft_lstadd_back(data, ft_lstnew(content));
