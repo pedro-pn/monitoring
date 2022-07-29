@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppaulo-d < ppaulo-d@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 00:53:11 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/06/16 01:25:09 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 11:29:36 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ char	*get_next_line(int fd)
 		return (NULL);
 	fill_buffer(fd, &s_buffer[fd]);
 	s_buffer[fd] = fill_line(s_buffer[fd], &line);
+	if (!line)
+		return (line);
 	if (ft_strlen(line) == 0)
 	{
 		free(line);
