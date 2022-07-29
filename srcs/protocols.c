@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 21:10:33 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/28 23:59:04 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 13:01:38 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	start_http(t_data data, int output)
 			close(pipes[0]);
 			dup2(pipes[1], 1);
 			close(pipes[1]);
-			execlp("curl", "curl", "-s", "-i", data.address, NULL);
+			execlp("curl", "curl", "-s", "-i", data.address, "-X", data.http_method, NULL);
 		}
 		close(pipes[1]);
 		line = get_next_line(pipes[0]);

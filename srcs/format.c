@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:15:50 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 11:06:05 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 13:05:00 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	format_out_http(char *line, t_data content, int output)
 
 	line_splt = ft_split(line, ' ');
 	code = ft_atoi(line_splt[1]);
-	ft_printf("# Name: %s\t Protcol: %s\tcode_expected: %d\tgot: %d\n",
-	content.name, content.protocol, content.http_code, code);
-	dprintf(output, "# Name: %s\t Protcol: %s\tcode_expected: %d\tgot: %d\n",
-	content.name, content.protocol, content.http_code, code);
+	ft_printf("# Name: %s\t Protcol: %s\t Request: %s\t code_expected: %d\tgot: %d\n",
+	content.name, content.protocol, content.http_method, content.http_code, code);
+	dprintf(output, "# Name: %s\t Protcol: %s\t Request: %s\t code_expected: %d\tgot: %d\n",
+	content.name, content.protocol, content.http_method, content.http_code, code);
 	clean_array((void **)line_splt);
 }
 
