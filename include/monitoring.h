@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:25:57 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/28 20:10:08 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/28 21:52:24 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 # define FILEOP 1
 # define INVINPUT 2
+# define  OUTFAIL 3
+# define NARG 4
 
 typedef struct s_data
 {
@@ -43,6 +45,9 @@ void	clean_data(void *content);
 void	format_out_ping(char *line, t_data content, int output);
 void	format_out_http(char *line, t_data content, int output);
 void	format_out_dns(char *line, t_data content, int output);
+void	start_ping(t_data data, int output);
+void	start_http(t_data data, int output);
+void	start_dns(t_data data, int output);
 // typedef struct s_http
 // {
 // 	char	*name;
