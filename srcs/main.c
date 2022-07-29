@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:35:25 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 11:30:09 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 13:59:15 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char *argv[])
 	read_file(&data, "monitoring.db");
 	temp = data;
 	output = open("monitoring.log", O_WRONLY | O_APPEND | O_CREAT, 0664);
+	print_menu(output);
 	if (output < 0)
 		error_handle(OUTFAIL);
 	while (temp){
@@ -42,11 +43,8 @@ int	main(int argc, char *argv[])
 	processes = ft_lstsize(data);
 	for (int i = 0; i < processes; i++)
 		wait(NULL);
-	ft_printf("xxxxxxxxxxxxxxxx");
-	// while (temp)
-	// {
-	// 	ft_printf("%s\n", ((t_data *)(temp->content))->address);
-	// 	temp = temp->next;
-	// }
-//	ft_lstclear(&data, clean_data);
+	ft_printf("xxxxxxxxxxxxxxxx\n");
+	ft_lstclear(&data, clean_data);
+	close(output);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:15:50 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 13:05:00 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 13:49:13 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,24 @@ void	format_out_dns(char *line, t_data content, int output)
 	content.name, content.protocol, content.address, content.dns_server, line);
 	dprintf(output, "# Name: %s\tProtocol: %s\tAddress: %s\tDNS_server: %s\n# Got: %s\n",
 	content.name, content.protocol, content.address, content.dns_server, line);
+}
+
+
+void	print_menu(int output)
+{
+	int		input;
+	char	*line;
+	
+	input = open("monitoring.db", O_RDONLY);
+	if (input < 0)
+		return ;
+	dprintf(output, "===================================monitoring===================================\n");
+	line = get_next_line(input);
+	while (line){
+		write(output, line, ft_strlen(line));
+		free(line);
+		line = get_next_line(input);
+	}
+	dprintf(output, "\n=====================================config=====================================\n\n");
+	close(input);
 }

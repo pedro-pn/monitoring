@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:25:57 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 11:09:15 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/29 13:41:17 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	start_http(t_data data, int output);
 void	start_dns(t_data data, int output);
 void	check_args(int argc, char *argv[]);
 void	recover_log(void);
+void	print_menu(int output);
 // typedef struct s_http
 // {
 // 	char	*name;
