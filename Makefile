@@ -5,7 +5,7 @@ SRCS_PATH = srcs
 OBJS_PATH = objs
 SRCS = ${addprefix ${SRCS_PATH}/, ${SOURCES}}
 OBJS = ${addprefix ${OBJS_PATH}/, ${SOURCES:.c=.o}}
-FLAGS = -g
+FLAGS = -Werror -Wall -Wextra -g
 CC = gcc
 
 # Colors
@@ -31,3 +31,16 @@ ${OBJS_PATH}/%.o: ${SRCS_PATH}/%.c
 ${LIBFT}:
 		@ echo "Compiling Libft..."
 		@ make -C ./libft --no-print-directory
+
+clean:
+		@ rm -rf ${OBJS_PATH}/
+		@ echo "${L_CYAN}Objects cleaned!${NC}"
+
+fclean: clean
+		@ make fclean -C libft/ --no-print-directory
+		@ rm -rf monitoring
+		@ echo "${L_BLUE}Program cleaned!${NC}"
+
+re: fclean all
+
+.PHONY: all clean fclean re
