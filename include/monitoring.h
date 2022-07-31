@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:25:57 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 19:56:00 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/30 23:15:38 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@
 # define FILEOP 1
 # define INVINPUT 2
 # define OUTFAIL 3
-# define NARG 4
-# define INVARG 5
-# define MONARG 6
-# define INVPROTO 7
-# define EINTERVAL 8
+# define INVARG 4
+# define MANYARGS 5
+# define INVPROTO 6
+# define EINTERVAL 7
+# define DBFILE "monitoring.db"
+# define LGFILE "monitoring.log"
 
 typedef struct s_data
 {
@@ -39,7 +40,7 @@ typedef struct s_data
 	char	*dns_server;
 }			t_data;
 
-void	read_file(t_list **data, char *file_name);
+void	read_file(t_list **data);
 void	error_handle(int code, char *name);
 void	clean_array(void **array);
 void	clean_data(void *content);

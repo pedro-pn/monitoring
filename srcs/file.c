@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:34:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 16:48:35 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/30 23:16:33 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static void	fill_ping(t_list **data, char **line);
 static void	fill_dns(t_list **data, char **line);
 static int	check_interval(char	*interval);
 
-void	read_file(t_list **data, char *file_name)
+void	read_file(t_list **data)
 {
 	int		fd;
 	char	*line;
 	char	**splt_line;
 
-	fd = open(file_name, O_RDONLY);
-	if (!fd)
+	fd = open(DBFILE, O_RDONLY);
+	if (fd < 0)
 		error_handle(FILEOP, NULL);
 	line = get_next_line(fd);
 	while (line)

@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 17:46:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 20:12:03 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/30 23:15:23 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	monitoring_init(t_list **data, int argc, char *argv[], int *output_fd)
 {
 	check_args(argc, argv);
 	*data = NULL;
-	read_file(data, "monitoring.db");
-	*output_fd = open("monitoring.log", O_WRONLY | O_APPEND | O_CREAT, 0664);
+	read_file(data);
+	*output_fd = open(LGFILE, O_WRONLY | O_APPEND | O_CREAT, 0664);
 	if (*output_fd < 0)
 		error_handle(OUTFAIL, NULL);
 	print_menu(*output_fd);
