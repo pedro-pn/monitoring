@@ -6,21 +6,24 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 21:10:33 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/29 20:08:46 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/31 20:15:38 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "monitoring.h"
 
-void	start_ping(t_data data, int output)
+int	start_ping(t_data data, int output)
 {
-	int pipes[2];
-	char *line;
-	int pid2;
-	
-	pipe(pipes);
-	pid2 = fork();
-	if (pid2 == 0){
+	int	pipes[2];
+	int	pid;
+	char	*line;
+
+	if (pipe(pipes) == -1)
+		return (EPIPE);
+	pid = fork();
+	if (pid == -1)
+		return (EFORK);
+	else if (pid == 0){
 		close(pipes[0]);
 		dup2(pipes[1], 1);
 		close(pipes[1]);
@@ -35,9 +38,10 @@ void	start_ping(t_data data, int output)
 		free(line);
 		line = get_next_line(pipes[0]);
 	}
+	return (EXIT_SUCCESS);
 }
 
-void	start_http(t_data data, int output)
+int	start_http(t_data data, int output)
 {
 	int		index;
 	int		pid;
@@ -50,9 +54,14 @@ void	start_http(t_data data, int output)
 	{
 		if (index > 1)
 			sleep(data.interval);
-		pipe(pipes);
+		if (index < 0)
+			index = 2;
+		if (pipe(pipes) == -1)
+			return (EPIPE);
 		pid = fork();
-		if (pid == 0){
+		if (pid == -1)
+			return (EFORK);
+		else if (pid == 0){
 			close(pipes[0]);
 			dup2(pipes[1], 1);
 			close(pipes[1]);
@@ -74,13 +83,14 @@ void	start_http(t_data data, int output)
 		write(output, "\n", 1);
 		index++;
 	}
+	return (EXIT_SUCCESS);
 }
 
-void	start_dns(t_data data, int output)
+int	start_dns(t_data data, int output)
 {
 	int		pipes[2];
 	char	*line;
-	int		pid2;
+	int		pid;
 	int		index;
 	char	*line_out;
 	
@@ -88,9 +98,14 @@ void	start_dns(t_data data, int output)
 	while (index){
 		if (index > 1)
 			sleep(data.interval);
-		pipe(pipes);
-		pid2 = fork();
-		if (pid2 == 0){
+		if (index < 0)
+			index = 2;
+		if (pipe(pipes) == -1)
+			return (EPIPE);
+		pid = fork();
+		if (pid == -1)
+			return (EFORK);
+		else if (pid == 0){
 			close(pipes[0]);
 			dup2(pipes[1], 1);
 			close(pipes[1]);
@@ -110,4 +125,5 @@ void	start_dns(t_data data, int output)
 		close(pipes[0]);
 		index++;
 	}
+	return (EXIT_SUCCESS);
 }

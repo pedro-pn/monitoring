@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:58:45 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/30 23:12:26 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/31 20:13:58 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ void	error_handle(int code, char *name)
 	else if (code == INVARG)
 		fprintf(stderr, "Try '--simplify' to visualize log.\n");
 	else if (code == MANYARGS)
-		fprintf(stderr, "monitoring allows only '--simplify' option\n");
+		fprintf(stderr, "monitoring allows only '--simplify' option.\n");
+	else if (code == EFORK)
+		fprintf(stderr, "monitoring: failed to fork.\n");
+	else if (code == EPIPE)
+		fprintf(stderr, "monitorig: failed to open pipe.\n");
 	else if (code == INVPROTO){
 		fprintf(stderr, "'%s' protocol invalid.\n", name);
 		return ;

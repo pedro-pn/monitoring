@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 17:46:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/30 23:15:23 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/31 20:14:10 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,26 @@ void	monitoring_init(t_list **data, int argc, char *argv[], int *output_fd)
 	print_menu(*output_fd);
 }
 
-void	monitoring_start(t_list *data, int output_fd)
+int	monitoring_start(t_list *data, int output_fd)
 {
 	t_data	*cont;
 	int		pid;
+	int		status;
 
 	while (data){
 		cont = (t_data *)data->content;
 		pid = fork();
+		if (pid < 0)
+			return (EFORK);
 		if (pid == 0 && !ft_strncmp(cont->protocol, "PING", ft_strlen(cont->protocol)))
-			start_ping(*cont, output_fd);
+			status = start_ping(*cont, output_fd);
 		else if (pid == 0 && !ft_strncmp(cont->protocol, "HTTP", ft_strlen(cont->protocol)))
-			start_http(*cont, output_fd);
+			status = start_http(*cont, output_fd);
 		else if (pid == 0 && !ft_strncmp(cont->protocol, "DNS", ft_strlen(cont->protocol)))
-			start_dns(*cont, output_fd);
+			status = start_dns(*cont, output_fd);
 		if (pid == 0) // make sure child process don't loop
-			break ;
+			return (status) ;
 		data = data->next;
 	}
+	return (EXIT_SUCCESS);
 }
