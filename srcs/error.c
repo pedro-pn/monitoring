@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:58:45 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 13:28:10 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:36:50 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,40 @@
 
 static int	check_interval(char	*interval);
 
-void	error_handle(int code, char *name)
+void	error_handle(int code)
 {
 	if (code == FILEOP)
-		fprintf(stderr, "Couldn't open 'monitoring.db'.\n");
+		fprintf(stderr, "Error: couldn't open 'monitoring.db'.\n");
 	else if (code == INVINPUT)
-		fprintf(stderr, "Invalid format in 'monitoring.db' file.\n");
+		fprintf(stderr, "Error: invalid format in 'monitoring.db' file.\n");
 	else if (code == OUTFAIL)
-		fprintf(stderr, "Couldn't create or modify 'monitoring.log'.\n");
+		fprintf(stderr, "Error: couldn't create or modify 'monitoring.log'.\n");
 	else if (code == INVARG)
 		fprintf(stderr, "Try '--simplify' to visualize log.\n");
 	else if (code == MANYARGS)
 		fprintf(stderr, "monitoring allows only '--simplify' option.\n");
 	else if (code == EFORK)
-		fprintf(stderr, "monitoring: failed to fork.\n");
+		fprintf(stderr, "Error: monitoring failed to fork.\n");
 	else if (code == EPIPE)
-		fprintf(stderr, "monitorig: failed to open pipe.\n");
-	else if (code == INVPROTO){
-		fprintf(stderr, "'%s' protocol invalid.\n", name);
-		return ;
-	}
-	else if (code == EINTERVAL){
-		fprintf(stderr, "Interval '%s' invalid.\n", 
-			(char *)ft_memrpl(name, '\n', 0, ft_strlen(name)));
-		return ;
-	}
+		fprintf(stderr, "Error: monitoring failed to open pipe.\n");
 	exit(EXIT_FAILURE);
 }
 
-void	check_file_format(char **line, t_list **data, char *interval, int method)
+int	check_file_format(char **line, char *interval, int method)
 {
 	int num_col;
 
 	num_col = 0;
 	while (line[num_col])
 		num_col++;
-	if (num_col != method){
-		clean_array((void **)line);
-		ft_lstclear(data, clean_data);
-		error_handle(INVINPUT, NULL);
-	}
+	if (num_col != method)
+		return (INVINPUT);
 	if (check_interval(interval) == 0){
-		error_handle(EINTERVAL, interval);
-		clean_array((void **)line);
-		ft_lstclear(data, clean_data);
-		exit(EXIT_FAILURE);
+		fprintf(stderr, "Interval '%s' invalid.\n", 
+			(char *)ft_memrpl(interval, '\n', 0, ft_strlen(interval)));
+		return (INVINPUT);
 	}
+	return (0);
 }
 
 static int	check_interval(char	*interval)

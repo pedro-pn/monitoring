@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:25:57 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 14:52:51 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:33:29 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 # define OUTFAIL 4
 # define INVARG 5
 # define MANYARGS 6
-# define INVPROTO 7
-# define EINTERVAL 8
 # define EFORK	9
 # define EPIPE 10
 # define HTTP 6
@@ -55,7 +53,7 @@ void	clean_array(void **array);
 /* Clean the content of linked list*/
 void	clean_data(void *content);
 /* Check if the configuration in 'monitoring.db' file is properly formatted*/
-void	check_file_format(char **line, t_list **data, char *interval, int method);
+int	check_file_format(char **line, char *interval, int method);
 
 
 // monitoring executing functions
@@ -93,7 +91,7 @@ int		write_dns(t_data data, int pipe, int log_fd);
 // error handling functions
 
 /* Exit program and print error to stderr */
-void	error_handle(int code, char *name);
+void	error_handle(int code);
 /* Check args received from program call */
 void	check_args(int argc, char *argv[]);
 

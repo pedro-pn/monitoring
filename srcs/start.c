@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 17:46:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 13:57:55 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:33:17 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	monitoring_init(t_list **data, int argc, char *argv[], int *log_fd)
 	read_file(data);
 	*log_fd = open(LGFILE, O_WRONLY | O_APPEND | O_CREAT, 0664);
 	if (*log_fd < 0)
-		error_handle(OUTFAIL, NULL);
+		error_handle(OUTFAIL);
 	print_menu(*log_fd);
 }
 
