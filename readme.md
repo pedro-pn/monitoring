@@ -23,6 +23,7 @@ Make supports the following commands:
 > - `make fclean` - perform clean and also remove its dependencies and executable file;
 > - `make re` - recompile project.
 
+
 ## Configuration
 
 Monitoring reads the instructions in the **monitoring.db** file located in the repository folder, which must be formatted as follows:
@@ -47,11 +48,11 @@ teste http	HTTP	example.com	GET	200	30
 
 Just excecute in the command line:
 
-	$>./monitoring
+	$> ./monitoring
 
 If you want to recover the simplified output from previous monitoring execution, run with the flag `--simplify`
 
-	$>./monitoring --simplify
+	$> ./monitoring --simplify
 
 
 # Support
