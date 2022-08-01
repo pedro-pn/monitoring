@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 21:10:33 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/31 20:15:38 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/07/31 22:57:59 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	start_ping(t_data data, int output)
 {
-	int	pipes[2];
-	int	pid;
+	int		pipes[2];
+	int		pid;
 	char	*line;
 
 	if (pipe(pipes) == -1)
@@ -43,19 +43,13 @@ int	start_ping(t_data data, int output)
 
 int	start_http(t_data data, int output)
 {
-	int		index;
 	int		pid;
 	int		pipes[2];
 	char	*line;
 	char	*line_out;
 	
-	index = 1;
-	while (index)
+	while (1)
 	{
-		if (index > 1)
-			sleep(data.interval);
-		if (index < 0)
-			index = 2;
 		if (pipe(pipes) == -1)
 			return (EPIPE);
 		pid = fork();
@@ -81,7 +75,7 @@ int	start_http(t_data data, int output)
 		format_out_http(line_out, data, output);
 		free(line_out);
 		write(output, "\n", 1);
-		index++;
+		sleep(data.interval);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -91,15 +85,9 @@ int	start_dns(t_data data, int output)
 	int		pipes[2];
 	char	*line;
 	int		pid;
-	int		index;
 	char	*line_out;
 	
-	index = 1;
-	while (index){
-		if (index > 1)
-			sleep(data.interval);
-		if (index < 0)
-			index = 2;
+	while (1){
 		if (pipe(pipes) == -1)
 			return (EPIPE);
 		pid = fork();
@@ -123,7 +111,7 @@ int	start_dns(t_data data, int output)
 		format_out_dns(line_out, data, output);
 		free(line_out);
 		close(pipes[0]);
-		index++;
+		sleep(data.interval);
 	}
 	return (EXIT_SUCCESS);
 }
