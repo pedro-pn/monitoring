@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:15:50 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 13:59:11 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 20:02:51 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	format_out_ping(char *line, t_data content, int log_fd)
 	}
 	else if (time)
 	{
-		ft_printf("# Name: %s\tProtocol: %s\t%s",
-		content.name, content.protocol, time);
-		dprintf(log_fd, "# Name: %s\tProtocol: %s\t%s",
-		content.name, content.protocol, time);
+		ft_printf("# Name: %s | Protocol: %s | Address: %s | %s",
+		content.name, content.protocol, content.address, time);
+		dprintf(log_fd, "# Name: %s | Protocol: %s | Address: %s | %s",
+		content.name, content.protocol, content.address, time);
 	}
 }
 
@@ -39,19 +39,19 @@ void	format_out_http(char *line, t_data content, int log_fd)
 
 	line_splt = ft_split(line, ' ');
 	code = ft_atoi(line_splt[1]);
-	ft_printf("# Name: %s\t Protocol: %s\t Request: %s\t code_expected: %d\tgot: %d\n\n",
-	content.name, content.protocol, content.http_method, content.http_code, code);
-	dprintf(log_fd, "# Name: %s\t Protocol: %s\t Request: %s\t code_expected: %d\tgot: %d\n",
-	content.name, content.protocol, content.http_method, content.http_code, code);
+	ft_printf("# Name: %s | Protocol: %s | Address: %s | Request: %s | code_expected: %d\tgot: %d\n\n",
+	content.name, content.protocol, content.address, content.http_method, content.http_code, code);
+	dprintf(log_fd, "# Name: %s | Protocol: %s | Address: %s | Request: %s | code_expected: %d\tgot: %d\n",
+	content.name, content.protocol, content.address,content.http_method, content.http_code, code);
 	clean_array((void **)line_splt);
 }
 
 void	format_out_dns(char *line, t_data content, int log_fd)
 {
 	if (line){
-		ft_printf("# Name: %s\tProtocol: %s\tAddress: %s\tDNS_server: %s\n# Got: %s\n",
+		ft_printf("# Name: %s | Protocol: %s | Address: %s | DNS_server: %s\n# Got: %s\n",
 		content.name, content.protocol, content.address, content.dns_server, line);
-		dprintf(log_fd, "# Name: %s\tProtocol: %s\tAddress: %s\tDNS_server: %s\n# Got: %s\n",
+		dprintf(log_fd, "# Name: %s | Protocol: %s | Address: %s | DNS_server: %s\n# Got: %s\n",
 		content.name, content.protocol, content.address, content.dns_server, line);
 	}
 }

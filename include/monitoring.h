@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:25:57 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 15:33:29 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:57:21 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define OUTFAIL 4
 # define INVARG 5
 # define MANYARGS 6
-# define EFORK	9
-# define EPIPE 10
+# define EFORK	7
+# define EPIPE 8
 # define HTTP 6
 # define PING 4
 # define DNS 5
