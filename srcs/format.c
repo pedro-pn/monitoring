@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:15:50 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/31 23:30:13 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 10:31:06 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,3 +75,62 @@ void	print_menu(int output)
 	close(input);
 }
 
+int	write_ping(t_data data, int pipe, int fd_log)
+{
+	char	*line;
+	
+	line = get_next_line(pipe);
+	if (!line)
+		return (1);
+	while (line){
+		write(fd_log, line, ft_strlen(line));
+		write(fd_log, "\n", 1);
+		format_out_ping(line, data, fd_log);
+		free(line);
+		line = get_next_line(pipe);
+	}
+	return (0);
+}
+
+int	write_http(t_data data, int pipe, int fd_log)
+{
+	char	*line;
+	char	*line_out;
+	
+	line = get_next_line(pipe);
+	line_out = NULL;
+	if (!line)
+		return (-1);
+	while (line){
+		write(fd_log, line, ft_strlen(line));
+		if (ft_strnstr(line, "HTTP/", ft_strlen(line)))
+			line_out = ft_strdup(line);
+		free(line);
+		line = get_next_line(pipe);
+	}
+	format_out_http(line_out, data, fd_log);
+	if (line_out)
+		free(line_out);
+	write(fd_log, "\n", 1);
+	return (0);
+}
+
+int	write_dns(t_data data, int pipe, int fd_log)
+{
+	char	*line;
+	char	*line_out;
+
+	line_out = NULL;
+	line = get_next_line(pipe);
+	while (line){
+		write(fd_log, line, ft_strlen(line));
+		if (ft_strnstr(line, data.address, ft_strlen(line)) && line[0] != ';')
+			line_out = ft_strdup(line);
+		free(line);
+		line = get_next_line(pipe);
+	}
+	format_out_dns(line_out, data, fd_log);
+	if (line_out)
+		free(line_out);
+	return (0);
+}

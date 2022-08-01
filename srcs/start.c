@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 17:46:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/31 20:14:10 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 09:53:29 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	monitoring_start(t_list *data, int output_fd)
 			status = start_http(*cont, output_fd);
 		else if (pid == 0 && !ft_strncmp(cont->protocol, "DNS", ft_strlen(cont->protocol)))
 			status = start_dns(*cont, output_fd);
-		if (pid == 0) // make sure child process don't loop
+		if (pid == 0)
 			return (status) ;
 		data = data->next;
 	}

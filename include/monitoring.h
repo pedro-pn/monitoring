@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:25:57 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/31 19:59:30 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 10:23:54 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 
-# define FILEOP 1
-# define INVINPUT 2
-# define OUTFAIL 3
-# define INVARG 4
-# define MANYARGS 5
-# define INVPROTO 6
-# define EINTERVAL 7
-# define EFORK 8
-# define EPIPE 9
+# define FILEOP 2
+# define INVINPUT 3
+# define OUTFAIL 4
+# define INVARG 5
+# define MANYARGS 6
+# define INVPROTO 7
+# define EINTERVAL 8
+# define EFORK	9
+# define EPIPE 10
 # define DBFILE "monitoring.db"
 # define LGFILE "monitoring.log"
 
@@ -56,5 +56,8 @@ void	check_args(int argc, char *argv[]);
 void	print_menu(int output);
 void	monitoring_init(t_list **data, int argc, char *argv[], int *output);
 int		monitoring_start(t_list *data, int output_fd);
+int		write_ping(t_data data, int pipe, int fd_log);
+int		write_http(t_data data, int pipe, int fd_log);
+int		write_dns(t_data data, int pipe, int fd_log);
 
 #endif
