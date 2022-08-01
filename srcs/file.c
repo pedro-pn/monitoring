@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:34:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 13:03:56 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 13:27:52 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	fill_data(t_list **data, char **line);
 static void	fill_http(t_list **data, char **line);
 static void	fill_ping(t_list **data, char **line);
 static void	fill_dns(t_list **data, char **line);
-static int	check_interval(char	*interval);
 
 void	read_file(t_list **data)
 {
@@ -58,22 +57,8 @@ static void	fill_data(t_list **data, char **line)
 static void	fill_http(t_list **data, char **line)
 {
 	t_data	*content;
-	int		num_col;
 
-	num_col = 0;
-	while (line[num_col])
-		num_col++;
-	if (num_col != 6){
-		clean_array((void **)line);
-		ft_lstclear(data, clean_data);
-		error_handle(INVINPUT, NULL);
-	}
-	if (check_interval(line[5]) == 0){
-		error_handle(EINTERVAL, line[5]);
-		clean_array((void **)line);
-		ft_lstclear(data, clean_data);
-		exit(EXIT_FAILURE);
-	}
+	check_file_format(line, data, line[5], HTTP);
 	content = malloc(sizeof(*content));
 	content->name = line[0];
 	content->protocol = line[1];
@@ -90,22 +75,8 @@ static void	fill_http(t_list **data, char **line)
 static void	fill_ping(t_list **data, char **line)
 {
 	t_data	*content;
-	int		num_col;
 
-	num_col = 0;
-	while (line[num_col])
-		num_col++;
-	if (num_col != 4){
-		clean_array((void **)line);
-		ft_lstclear(data, clean_data);
-		error_handle(INVINPUT, NULL);
-	}
-	if (check_interval(line[3]) == 0){
-		error_handle(EINTERVAL, line[3]);
-		clean_array((void **)line);
-		ft_lstclear(data, clean_data);
-		exit(EXIT_FAILURE);
-	}
+	check_file_format(line, data, line[3], PING);
 	content = malloc(sizeof(*content));
 	content->name = line[0];
 	content->protocol = line[1];
@@ -121,22 +92,8 @@ static void	fill_ping(t_list **data, char **line)
 static void	fill_dns(t_list **data, char **line)
 {
 	t_data	*content;
-	int		num_col;
 
-	num_col = 0;
-	while (line[num_col])
-		num_col++;
-	if (num_col != 5){
-		clean_array((void **)line);
-		ft_lstclear(data, clean_data);
-		error_handle(INVINPUT, NULL);
-	}
-	if (check_interval(line[3]) == 0){
-		error_handle(EINTERVAL, line[3]);
-		clean_array((void **)line);
-		ft_lstclear(data, clean_data);
-		exit(EXIT_FAILURE);
-	}
+	check_file_format(line, data, line[3], DNS);
 	content = malloc(sizeof(*content));
 	content->name = line[0];
 	content->protocol = line[1];
@@ -179,23 +136,4 @@ void	clean_data(void *content)
 	if (cont->protocol)
 		free(cont->protocol);
 	free(content);
-}
-
-static int	check_interval(char	*interval)
-{
-	char	*trim_inter;
-	int		index;
-
-	trim_inter = ft_strtrim(interval, "\n\t");
-	index = 0;
-	while(trim_inter[index])
-	{
-		if (!ft_isdigit(trim_inter[index])){
-			free(trim_inter);
-			return (0);
-		}
-		index++;
-	}
-	free(trim_inter);
-	return (1);
 }

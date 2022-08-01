@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:25:57 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 12:52:01 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 13:28:17 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 # define EINTERVAL 8
 # define EFORK	9
 # define EPIPE 10
+# define HTTP 6
+# define PING 4
+# define DNS 5
 # define DBFILE "monitoring.db"
 # define LGFILE "monitoring.log"
 
@@ -60,5 +63,6 @@ int		monitoring_start(t_list *data, int output_fd);
 int		write_ping(t_data data, int pipe, int fd_log);
 int		write_http(t_data data, int pipe, int fd_log);
 int		write_dns(t_data data, int pipe, int fd_log);
+void	check_file_format(char **line, t_list **data, char *interval, int method);
 
 #endif
