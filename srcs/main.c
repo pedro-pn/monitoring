@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:35:25 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 12:39:26 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 13:57:05 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ int	main(int argc, char *argv[])
 {
 	t_list	*data;
 	int		processes;
-	int		output_fd;
+	int		log_fd;
 	int		status;
 
-	monitoring_init(&data, argc, argv, &output_fd);
-	status = monitoring_start(data, output_fd);
+	monitoring_init(&data, argc, argv, &log_fd);
+	status = monitoring_start(data, log_fd);
 	processes = ft_lstsize(data);
 	for (int i = 0; i < processes; i++)
 		wait(NULL);
 	ft_lstclear(&data, clean_data);
-	close(output_fd);
+	close(log_fd);
 	if (status)
 		error_handle(status, NULL);
 	return (0);
