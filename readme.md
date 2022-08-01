@@ -4,14 +4,14 @@
 This project is a web monitoring program written in C to get status from three protocols: PING, HTTP and DNS. The information acquired is stored in monitoring.log file inside the programs folder and a simplify version is printed in the terminal.
 
 # Usage
-## Requirements
+### Requirements
 
 
 Monitoring requires a gcc compiler, standard C libraries and it runs only in linux system (only ubuntu was tested).
 
-## Install
+### Install
 
-Run `make` comamnd in the repository folder:
+Run `make` command in the repository folder:
 
 	$> make
 
@@ -24,7 +24,7 @@ Make supports the following commands:
 > - `make re` - recompile project.
 
 
-## Configuration
+### Configuration
 
 Monitoring reads the instructions in the **monitoring.db** file located in the repository folder, which must be formatted as follows:
 
@@ -44,7 +44,7 @@ teste dns	DNS	example.com	10	8.8.8.8
 teste http	HTTP	example.com	GET	200	30
 ```
 
-## Run
+### Run
 
 Just excecute in the command line:
 
