@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 21:34:05 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/07/30 23:16:33 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 13:03:56 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ void	read_file(t_list **data)
 
 static void	fill_data(t_list **data, char **line)
 {
-	if (!ft_strncmp(line[1], "HTTP", ft_strlen(line[1])))
+	if (!strcmp(line[1], "HTTP"))
 		fill_http(data, line);
-	else if (!ft_strncmp(line[1], "PING", ft_strlen(line[1])))
+	else if (!strcmp(line[1], "PING"))
 		fill_ping(data, line);
-	else if (!ft_strncmp(line[1], "DNS", ft_strlen(line[1])))
+	else if (!strcmp(line[1], "DNS"))
 		fill_dns(data, line);
 	else{
 		ft_lstclear(data, clean_data);

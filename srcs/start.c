@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 17:46:12 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 09:53:29 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:56:02 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int	monitoring_start(t_list *data, int output_fd)
 		pid = fork();
 		if (pid < 0)
 			return (EFORK);
-		if (pid == 0 && !ft_strncmp(cont->protocol, "PING", ft_strlen(cont->protocol)))
+		if (pid == 0 && !strcmp(cont->protocol, "PING"))
 			status = start_ping(*cont, output_fd);
-		else if (pid == 0 && !ft_strncmp(cont->protocol, "HTTP", ft_strlen(cont->protocol)))
+		else if (pid == 0 && !strcmp(cont->protocol, "HTTP"))
 			status = start_http(*cont, output_fd);
-		else if (pid == 0 && !ft_strncmp(cont->protocol, "DNS", ft_strlen(cont->protocol)))
+		else if (pid == 0 && !strcmp(cont->protocol, "DNS"))
 			status = start_dns(*cont, output_fd);
 		if (pid == 0)
 			return (status) ;
