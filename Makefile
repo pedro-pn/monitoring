@@ -43,4 +43,7 @@ fclean: clean
 
 re: fclean all
 
+clog:
+		@ rm -rf monitoring.log
+
 .PHONY: all clean fclean re
