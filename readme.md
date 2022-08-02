@@ -1,13 +1,13 @@
 # MONITORING
 *A simple web service monitoring application*
 # Description
-This project is a web monitoring program written in C to get status from three protocols: PING, HTTP and DNS. The information acquired is stored in monitoring.log file inside the programs folder and a simplify version is printed in the terminal.
+This project is a web monitoring program written in C to get status from three protocols: PING, HTTP and DNS. The information acquired is stored in `monitoring.log` file inside the program folder and a simplify version is printed in the terminal.
 
 # Usage
 ### Requirements
 
 
-Monitoring requires a gcc compiler, standard C libraries and it runs only in linux system (only ubuntu was tested).
+Monitoring requires a gcc compiler, standard C libraries and it runs only in Linux system (only Ubuntu was tested).
 
 ### Install
 
@@ -28,7 +28,7 @@ Make supports the following commands:
 
 Monitoring reads the instructions in the **monitoring.db** file located in the repository folder, which must be formatted as follows:
 
-| Protocolo  |  Configurations |
+| Protocol  |  Configurations |
 | :-----: | --------- |
 | PING | name, protocol, address, interval |
 | DNS | name, protocol, address, interval, dns server |
