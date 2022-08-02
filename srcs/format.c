@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:15:50 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/02 11:08:06 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/02 11:16:07 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void	format_out_dns(char *line, t_data content, int log_fd)
 	time_s = ctime(&time_now);
 	ft_memrpl(time_s, '\n', 0, ft_strlen(time_s));
 	if (line){
-		ft_printf("# [%s]\n# Name: %s | Protocol: %s | Address: %s | DNS_server: %s\n# Got: %s#Status: %s%s%s\n\n",
+		ft_printf("# [%s]\n# Name: %s | Protocol: %s | Address: %s | DNS_server: %s\n# Got: %s# Status: %s%s%s\n\n",
 		time_s, content.name, content.protocol, content.address, content.dns_server, line, GREEN, HEALTHY, NC);
-		dprintf(log_fd, "# [%s]\n# Name: %s | Protocol: %s | Address: %s | DNS_server: %s\n# Got: %s#Status: %s\n\n",
+		dprintf(log_fd, "# [%s]\n# Name: %s | Protocol: %s | Address: %s | DNS_server: %s\n# Got: %s# Status: %s\n\n",
 		time_s, content.name, content.protocol, content.address, content.dns_server, line, HEALTHY);
 	}
 	else{

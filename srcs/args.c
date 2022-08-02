@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 10:26:51 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 15:32:58 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/02 11:14:15 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	recover_log(void)
 	if (log < 0)
 	{
 		fprintf(stderr, "Fail to read 'monitoring.log'\n");
-		return ;
+		exit(EXIT_FAILURE);
 	}
 	line = get_next_line(log);
 	while (line)
@@ -47,4 +47,5 @@ static void	recover_log(void)
 		line = get_next_line(log);
 	}
 	close(log);
+	exit(EXIT_SUCCESS);
 }
