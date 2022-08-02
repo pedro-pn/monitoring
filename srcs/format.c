@@ -6,28 +6,47 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:15:50 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/02 11:16:07 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/02 15:59:24 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "monitoring.h"
+
+
+static char	*get_time(void)
+{
+	time_t	time_now;
+	char	*time_s;
+
+	time_now = time(NULL);
+	time_s = ctime(&time_now);
+	ft_memrpl(time_s, '\n', 0, ft_strlen(time_s));
+	return (time_s);
+}
 
 void	format_out_ping(char *line, t_data content, int log_fd)
 {
 	char	*time_ms;
 	char	*packets;
 	char	*time_s;
-	time_t	time_now;
-	
-	time_now = time(NULL);
-	time_s = ctime(&time_now);
-	ft_memrpl(time_s, '\n', 0, ft_strlen(time_s));
+	char	*status;
+	char	*color;
+
+	time_s = get_time();
 	time_ms = ft_strnstr(line, "time", ft_strlen(line));
 	packets = ft_strnstr(line, "packets", ft_strlen(line));
 	if (packets)
 	{
-		ft_printf("# %s\n", packets);
-		dprintf(log_fd, "# %s", packets);
+		if (ft_strnstr(line, "1 received", ft_strlen(line))){
+			status = HEALTHY;
+			color = GREEN;
+		}
+		else{
+			status = UNHEALTHY;
+			color = RED;
+		}
+		ft_printf("# %s# Status: %s%s%s\n\n", packets, color, status , NC);
+		dprintf(log_fd, "# %s# Status :%s\n\n", packets, status);
 	}
 	else if (time_ms)
 	{
@@ -45,11 +64,8 @@ void	format_out_http(char *line, t_data content, int log_fd)
 	char	*color;
 	char	*time_s;
 	int		code;
-	time_t	time_now;
 
-	time_now = time(NULL);
-	time_s = ctime(&time_now);
-	ft_memrpl(time_s, '\n', 0, ft_strlen(time_s));
+	time_s = get_time();
 	line_splt = ft_split(line, ' ');
 	code = ft_atoi(line_splt[1]);
 	if (code ==  content.http_code){
@@ -69,12 +85,9 @@ void	format_out_http(char *line, t_data content, int log_fd)
 
 void	format_out_dns(char *line, t_data content, int log_fd)
 {
-	time_t	time_now;
 	char	*time_s;
 
-	time_now = time(NULL);
-	time_s = ctime(&time_now);
-	ft_memrpl(time_s, '\n', 0, ft_strlen(time_s));
+	time_s = get_time();
 	if (line){
 		ft_printf("# [%s]\n# Name: %s | Protocol: %s | Address: %s | DNS_server: %s\n# Got: %s# Status: %s%s%s\n\n",
 		time_s, content.name, content.protocol, content.address, content.dns_server, line, GREEN, HEALTHY, NC);
