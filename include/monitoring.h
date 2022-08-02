@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:25:57 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 22:18:51 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/02 11:12:02 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@
 # define DBFILE "monitoring.db"
 # define LGFILE "monitoring.log"
 # define HEALTHY "HEALTHY"
-# define BAD "BAD"
+# define UNHEALTHY "UNHEALTHY"
+# define RED "\033[1;31m"
+# define GREEN "\033[1;32m"
+# define NC "\e[0m"
 
 typedef struct s_data
 {
