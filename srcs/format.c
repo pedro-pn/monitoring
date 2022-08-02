@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:15:50 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 20:02:51 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 22:38:27 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,61 @@
 
 void	format_out_ping(char *line, t_data content, int log_fd)
 {
-	char	*time;
+	char	*time_ms;
 	char	*packets;
-	time = ft_strnstr(line, "time", ft_strlen(line));
+	char	*status;
+	time_t	time_now;
+	
+	time_now = time(NULL);
+	time_ms = ft_strnstr(line, "time", ft_strlen(line));
+	if (time_ms)
+		ft_memrpl(time_ms, '\n', 0, ft_strlen(time_ms));
 	packets = ft_strnstr(line, "packets", ft_strlen(line));
 	if (packets)
 	{
 		ft_printf("# %s\n", packets);
 		dprintf(log_fd, "# %s", packets);
 	}
-	else if (time)
+	else if (time_ms)
 	{
-		ft_printf("# Name: %s | Protocol: %s | Address: %s | %s",
-		content.name, content.protocol, content.address, time);
-		dprintf(log_fd, "# Name: %s | Protocol: %s | Address: %s | %s",
-		content.name, content.protocol, content.address, time);
+		ft_printf("# Name: %s | Protocol: %s | Address: %s | %s | %s",
+		content.name, content.protocol, content.address, time_ms, ctime(&time_now));
+		dprintf(log_fd, "# Name: %s | Protocol: %s | Address: %s | %s | %s",
+		content.name, content.protocol, content.address, time_ms, ctime(&time_now));
 	}
 }
 
 void	format_out_http(char *line, t_data content, int log_fd)
 {
 	char	**line_splt;
+	char	*status;
 	int		code;
+	time_t	time_now;
 
+	time_now = time(NULL);
 	line_splt = ft_split(line, ' ');
 	code = ft_atoi(line_splt[1]);
-	ft_printf("# Name: %s | Protocol: %s | Address: %s | Request: %s | code_expected: %d\tgot: %d\n\n",
-	content.name, content.protocol, content.address, content.http_method, content.http_code, code);
-	dprintf(log_fd, "# Name: %s | Protocol: %s | Address: %s | Request: %s | code_expected: %d\tgot: %d\n",
-	content.name, content.protocol, content.address,content.http_method, content.http_code, code);
+	if (code ==  content.http_code)
+		status = HEALTHY;
+	else
+		status = BAD;
+	ft_printf("# Name: %s | Protocol: %s | Address: %s | Request: %s | code_expected: %d got: %d | Status: %s | %s\n",
+	content.name, content.protocol, content.address, content.http_method, content.http_code, code, status, ctime(&time_now));
+	dprintf(log_fd, "# Name: %s | Protocol: %s | Address: %s | Request: %s | code_expected: %d got: %d | Status: %s | %s\n",
+	content.name, content.protocol, content.address, content.http_method, content.http_code, code, status, ctime(&time_now));
 	clean_array((void **)line_splt);
 }
 
 void	format_out_dns(char *line, t_data content, int log_fd)
 {
+	time_t	time_now;
+
+	time_now = time(NULL);
 	if (line){
-		ft_printf("# Name: %s | Protocol: %s | Address: %s | DNS_server: %s\n# Got: %s\n",
-		content.name, content.protocol, content.address, content.dns_server, line);
-		dprintf(log_fd, "# Name: %s | Protocol: %s | Address: %s | DNS_server: %s\n# Got: %s\n",
-		content.name, content.protocol, content.address, content.dns_server, line);
+		ft_printf("# Name: %s | Protocol: %s | Address: %s | DNS_server: %s | %s# Got: %s\n",
+		content.name, content.protocol, content.address, content.dns_server, ctime(&time_now), line);
+		dprintf(log_fd, "# Name: %s | Protocol: %s | Address: %s | DNS_server: %s | %s# Got: %s\n",
+		content.name, content.protocol, content.address, content.dns_server, ctime(&time_now), line);
 	}
 }
 

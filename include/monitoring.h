@@ -6,7 +6,7 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 20:25:57 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/01 16:57:21 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/01 22:18:51 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include <fcntl.h>
+# include <time.h>
 # include <stdio.h>
 # include <string.h>
 # include <sys/wait.h>
@@ -32,6 +33,8 @@
 # define DNS 5
 # define DBFILE "monitoring.db"
 # define LGFILE "monitoring.log"
+# define HEALTHY "HEALTHY"
+# define BAD "BAD"
 
 typedef struct s_data
 {
