@@ -6,12 +6,11 @@
 /*   By: ppaulo-d <ppaulo-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:15:50 by ppaulo-d          #+#    #+#             */
-/*   Updated: 2022/08/02 15:59:24 by ppaulo-d         ###   ########.fr       */
+/*   Updated: 2022/08/02 19:10:14 by ppaulo-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "monitoring.h"
-
 
 static char	*get_time(void)
 {
