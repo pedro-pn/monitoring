@@ -39,9 +39,9 @@ Each service must be separated by lines and the configuration by coloumns separa
 ```
  # monitoring.db
 
-teste ping	PING	example.com	5
-teste dns	DNS	example.com	10	8.8.8.8
-teste http	HTTP	example.com	GET	200	30
+ping test	PING	example.com	5
+dns	test	DNS	example.com	10	8.8.8.8
+http test	HTTP	example.com	GET	200	30
 ```
 
 ### Run
