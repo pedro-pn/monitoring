@@ -7,7 +7,7 @@ This project is a web monitoring program written in C to get status from three p
 ### Requirements
 
 
-Monitoring requires a gcc compiler, standard C libraries and it runs only in Linux system (only Ubuntu was tested).
+Monitoring requires a gcc compiler, standard C libraries, and it runs only in Linux system (only Ubuntu was tested).
 
 ### Install
 
@@ -50,10 +50,21 @@ Just excecute in the command line:
 
 	$> ./monitoring
 
+During execution, simplified informations about the services are displayed in terminal:
+
+![execution](./screenshots/monitoring.gif)
+
 If you want to recover the simplified output from previous monitoring execution, run with the flag `--simplify`
 
 	$> ./monitoring --simplify
 
+# Roadmap
+
+- [ ] Unhealthy service notification (Discord, email, Slack and/or Webhook)
+- [ ] Identification of incomun services behaviour, such as ping latency increase
+- [ ] TCP and MQTT monitoring
+- [ ] Unix-lile parsing arguments to filter and modify program behaviour
+- [ ] Aggregate data from `monitoring.log` with diagrams, graphs, and CLI
 
 # Support
 
