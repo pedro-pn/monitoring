@@ -40,7 +40,7 @@ Each service must be separated by lines and the configuration by coloumns separa
  # monitoring.db
 
 ping test	PING	example.com	5
-dns	test	DNS	example.com	10	8.8.8.8
+dns test	DNS	example.com	10	8.8.8.8
 http test	HTTP	example.com	GET	200	30
 ```
 
