@@ -7,7 +7,7 @@ This project is a web monitoring program written in C to get status from three p
 ### Requirements
 
 
-Monitoring requires a gcc compiler, standard C libraries, and it runs only in Linux system (only Ubuntu was tested).
+Monitoring requires the clang compiler, standard C libraries, and it runs only in Linux system (only Ubuntu was tested).
 
 ### Install
 
